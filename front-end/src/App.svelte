@@ -15,8 +15,10 @@
     });
 </script>
 
+
 <svelte:window on:resize={isMobile} on:load={isMobile} />
 
 <main>
+
     <Router {routes} />
 </main>

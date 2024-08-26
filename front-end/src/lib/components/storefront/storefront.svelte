@@ -19,9 +19,21 @@
 <main>
     Store Front
     <br>
-    {#each Object.keys(products) as product}
-        <a href='products/{product}'>
-            <Product product_name={product} images={products[product]} />
-        </a>
-    {/each}
+
+    <div id="products">
+        {#each Object.keys(products) as product}
+            <a href='products/{product}'>
+                <Product product_name={product} images={products[product]} />
+            </a>
+        {/each}
+    </div>
 </main>
+
+<style>
+    div#products {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        padding: 1rem;
+    }
+</style>
