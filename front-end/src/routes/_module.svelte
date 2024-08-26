@@ -5,7 +5,6 @@
  
 <main>
     <Navigation>
-      This is my module
       <slot/>
     </Navigation>
 </main>

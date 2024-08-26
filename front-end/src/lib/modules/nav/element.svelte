@@ -1,9 +1,9 @@
 <script>
-    import * as Tooltip from "$lib/components/ui/tooltip/index.ts"
+    import * as Tooltip from "$components/ui/tooltip/index.ts"
     
     export let title = "unassigned";
     export let icon = {};
-    export let path = "/";
+    export let path = undefined;
 </script>
 
 <Tooltip.Root>
@@ -14,7 +14,7 @@
         use:builder.action
         {...builder}
       >
-        <svelte:component this={icon} class="h-4 w-4" />
+        <svelte:component this={icon} class="h-5 w-5" />
         <span class="sr-only">{title}</span>
       </a>
     </Tooltip.Trigger>
