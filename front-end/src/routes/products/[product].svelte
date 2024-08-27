@@ -22,7 +22,7 @@
     let product_meta: any = product_map[product];
     let images: Array<string> = Object.keys(product_meta);
     let selected_image: number = 0;
-    let selected_color: string = colors[0];
+    let selected_color: string = colors ? colors[0] : '';
     let filtered_images: Array<string> = images;
 
     const filterByColor = (selected: string) => {
@@ -33,7 +33,9 @@
         console.log("Filtered images: ", filtered_images);
     }
 
-    filterByColor(selected_color);
+    if (colors?.length > 0) 
+        { filterByColor(selected_color); }
+
     let filtered_image_count: number = filtered_images.length;
 
     const setDescription = (e: HTMLElement) => 
