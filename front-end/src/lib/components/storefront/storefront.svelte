@@ -17,12 +17,9 @@
 </script>
 
 <main>
-    Store Front
-    <br>
-
-    <div id="products">
+    <div id="products" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-16">
         {#each Object.keys(products) as product}
-            <a href='products/{product}'>
+            <a id="product" href='products/{product}'>
                 <Product product_name={product} images={products[product]} />
             </a>
         {/each}
@@ -30,10 +27,18 @@
 </main>
 
 <style>
-    div#products {
+    main {
         display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        padding: 1rem;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 1rem;
+    }
+
+    a#product {
+        display: flex;
+        justify-content: center;
+        width: 360px;
+        align-items: center;
     }
 </style>

@@ -2,6 +2,5 @@
     </script>
 
 <main>
-    Product Module
     <slot />
 </main>

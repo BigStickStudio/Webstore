@@ -7,7 +7,7 @@
 <main>
   <a
     href={path}
-    class="flex items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-4 md:w-4"
+    class="flex items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground"
   >
     <div class="menu_item">
       <div>

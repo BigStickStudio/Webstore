@@ -22,3 +22,12 @@
 
     <Router {routes} />
 </main>
+
+<style>
+    main {
+        background-attachment: fixed;
+        background-image: 
+            linear-gradient(90deg, transparent, #f6d0e61b),
+            linear-gradient(180deg, transparent, #b6f5e039);
+    }
+</style>

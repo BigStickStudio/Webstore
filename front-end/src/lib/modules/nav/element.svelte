@@ -10,11 +10,11 @@
     <Tooltip.Trigger asChild let:builder>
       <a
         href={path}
-        class="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-4 md:w-4"
+        class="flex h-10 w-10 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground"
         use:builder.action
         {...builder}
       >
-        <svelte:component this={icon} class="h-5 w-5" />
+        <svelte:component this={icon} />
         <span class="sr-only">{title}</span>
       </a>
     </Tooltip.Trigger>

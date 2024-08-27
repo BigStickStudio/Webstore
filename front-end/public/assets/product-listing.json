@@ -1,0 +1,32 @@
+{
+    "ascetic-media": {
+        "name": "Ascetic Media Champion Hoodie",
+        "type": "Hoodie",
+        "colors": ["Black", "Charcoal Heather"],
+        "prices": [43.99, 43.99, 43.99, 43.99, 47.99, 49.99],
+        "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+        "description": "Proceeds go towards the Ascetic Media platform development through Project Nexus.<br><br>Released by the American heritage brand, Champion, the Champion S700 eco hooded sweatshirt brings timeless style and deluxe comfort to any wardrobe. This custom Champion hoodie features Champion’s Double Dry® technology - keeping the wearer warm and toasty. It is a medium-weight two-ply fleece hoodie in a regular fit with a spacious pocket. The hoodie has the iconic \"C\" logo on the left sleeve and is made of up to 5% recycled polyester from plastic bottles.<br><br>.: Custom Champion hoodie made with 50% cotton, 50% polyester<br>.: Kangaroo pockets for added convenience<br>.: Medium heavy fabric (9 oz /yd² (310 g/m²)) for warmth and coziness<br>.: All Champion S700 hoodies feature the iconic \"C\" logo on the left sleeve<br>.: All Champion S700 hoodies are made of up to 5% recycled plastic bottles<br>.: All custom Champion hoodies come with a laid-back, regular fit<br>.: Sewn in label with care instructions<br>.: No side seams to minimize fabric waste<br>"
+    },
+    "culture-heritage-legacy": {
+        "name": "Culture.Heritage.Legacy. Ancillary Hoodie",
+        "type": "Hoodie",
+        "colors": ["Black"],
+        "prices": [49.99, 49.99, 49.99, 49.99, 49.99, 49.99],        
+        "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+        "description": "Celebrate your roots with our \"Culture. Heritage. Legacy.\" zip-up hoodie. This versatile and cozy hoodie is designed to keep you warm while making a statement about what matters most.<br><br>Made from high-quality fabric, it features a sleek design and the inspiring words \"Culture. Heritage. Legacy.\" across the chest.<br><br>Perfect for everyday wear, this hoodie is a great addition to your wardrobe. Available now.: 50% cotton, 50% polyester<br><br>.: Medium-heavy fabric (8 oz/yd² (271 g/m²))<br>.: Classic fit<br>.: Sewn-in label<br>.: Runs true to size<br>"
+    },
+    "fabrication": {
+        "name": "Fabrication: The Art of Engineering",
+        "type": "Book",
+        "prices": [19.99],
+        "description": "Fabrication: The Art of Engineering is a pragmatic take on creative problem-solving.<br><br>The book is geared towards helping non-technical people develop a foundational understanding of the critical thinking skills required to be a fabricator.<br><br>The book explores some philosophical takes to explore the consequences and impacts that sometimes arise as a result of engineering problems, and even outlines some potential paradoxes that are encountered in Engineering fields."
+    },
+    "roosevelt": {
+        "name": "Roosevelt Tee",
+        "type": "T-Shirt",
+        "colors": ["Light Blue", "Sand", "Sport Grey", "Ice Grey", "Yellow"],
+        "prices": [15.59, 15.59, 15.59, 15.59, 17.99, 19.99, 20.99, 20.99],
+        "sizes": ["S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL"],
+        "description": "Limited Run, Official, Big Stick Studio TEE<br><br>The unisex heavy cotton tee is the basic staple of any wardrobe. It is the foundation upon which casual fashion grows. All it needs is a personalized design to elevate things to profitability. The specially spun fibers provide a smooth surface for premium printing vividity and sharpness. No side seams mean there are no itchy interruptions under the arms. The shoulders have tape for improved durability.<br><br>.: Made with medium fabric (5.3 oz/yd² (180 g/m²)) consisting of 100% cotton for year-round comfort that is sustainable and highly durable.<br>.: The classic fit of this shirt ensures a comfy, relaxed wear while the crew neckline adds that neat, timeless look that can blend into any occasion, casual or semi-formal.<br>.: The tear-away label means a scratch-free experience with no irritation or discomfort whatsoever.<br>.: Made using 100% US cotton that is ethically grown and harvested. Gildan is also a proud member of the US Cotton Trust Protocol ensuring ethical and sustainable means of production. This blank tee is certified by Oeko-Tex for safety and quality assurance."
+    }
+}

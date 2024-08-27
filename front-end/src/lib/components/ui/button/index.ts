@@ -11,6 +11,8 @@ const buttonVariants = tv({
 				"bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-sm",
 			outline:
 				"border-input bg-background hover:bg-accent hover:text-accent-foreground border shadow-sm",
+			store:
+				"border-input bg-store-accent hover:bg-accent hover:text-accent-foreground border shadow-sm",
 			secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-sm",
 			ghost: "hover:bg-accent hover:text-accent-foreground",
 			link: "text-primary underline-offset-4 hover:underline",
@@ -39,12 +41,7 @@ type Props = ButtonPrimitive.Props & {
 type Events = ButtonPrimitive.Events;
 
 export {
-	Root,
-	type Props,
-	type Events,
 	//
-	Root as Button,
-	type Props as ButtonProps,
-	type Events as ButtonEvents,
-	buttonVariants,
+	Root as Button, Root, buttonVariants, type Events as ButtonEvents, type Props as ButtonProps, type Events, type Props
 };
+
