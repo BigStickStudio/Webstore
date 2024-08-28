@@ -6,14 +6,11 @@
     const orchestrator = Orchestrator.instance;
     $: is_mobile = false;
 
-    const isMobile = () => {
-        console.log(screen.orientation)
-        orchestrator.is_mobile = window.innerWidth <= 800;
-    }
+    const isMobile = () => 
+        { orchestrator.is_mobile = window.innerWidth <= 800; }
 
-    let unsubscribe = orchestrator?.store.subscribe((state) => {
-        is_mobile = state.is_mobile;
-    });
+    let unsubscribe = orchestrator?.store.subscribe((state) => 
+        { is_mobile = state.is_mobile; });
 </script>
 
 
