@@ -10,7 +10,7 @@
     <Tooltip.Trigger asChild let:builder>
       <a
         href={path}
-        class="flex h-10 w-10 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground"
+        class="flex h-10 w-10 items-center justify-center rounded-lg transition-colors hover:text-muted-foreground"
         use:builder.action
         {...builder}
       >

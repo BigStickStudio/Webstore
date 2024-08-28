@@ -17,9 +17,9 @@
 </script>
 
 <main>
-    <div id="products" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-16">
+    <div id="products" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-24">
         {#each Object.keys(products) as product}
-            <a id="product" href='products/{product}'>
+            <a id="product" href='/products/{product}'>
                 <Product product_name={product} images={products[product]} />
             </a>
         {/each}

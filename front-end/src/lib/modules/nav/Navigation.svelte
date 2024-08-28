@@ -23,7 +23,7 @@
 
 <div class="flex min-h-screen w-full flex-col bg-muted/40">
   <div>
-    <aside class="inset-y-0 z-10 hidden h-8 flex-row border-b bg-background sm:flex">
+    <aside class="flex inset-y-0 z-10  h-8 flex-row border-b bg-background">
       <nav class="flex flex-row ml-auto mr-4 items-center gap-4 px-2 py-4">
         {#if is_mobile}  
           <Menu title="Menu" icon={Hamburger} items={item_map} />

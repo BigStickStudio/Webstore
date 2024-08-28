@@ -7,7 +7,8 @@
     $: is_mobile = false;
 
     const isMobile = () => {
-        orchestrator.is_mobile = window.innerWidth <= 800 || window.innerHeight < 600;
+        console.log(screen.orientation)
+        orchestrator.is_mobile = window.innerWidth <= 800;
     }
 
     let unsubscribe = orchestrator?.store.subscribe((state) => {
