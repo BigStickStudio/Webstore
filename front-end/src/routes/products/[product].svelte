@@ -52,23 +52,31 @@
 
     const addToCart = (e: any) => {
         e.preventDefault();
+        let cart = orchestrator.shopping_cart;
 
         if (category == "Clothing") {
             if (selected_size === undefined) { alert('Please select a size'); return; }
             if (selected_color === undefined) { alert('Please select a color'); return; }
+            if (quantity < 1) { alert('Please select a valid quantity'); return; }
             alert(`Added ${selected_color} ${product_name}, ${selected_size} to cart`);
             
-            let cart = orchestrator.shopping_cart;
-            orchestrator.shopping_cart(cart, {
-                product: product_name,
-                color: selected_color,
-                size: selected_size,
-                price: price
-            });
+            orchestrator.shopping_cart = [...cart, {
+                    product: product_name,
+                    color: selected_color,
+                    size: selected_size,
+                    price: price,
+                    quantity: quantity,
+                    category: category
+                }];
             return;
         }
 
-        alert (`Added ${product_name} to cart`);
+        orchestrator.shopping_cart = [...cart, {
+            product: product_name,
+            price: price,
+            quantity: quantity,
+            category: category
+        }];
     }
 </script>
 
@@ -147,32 +155,28 @@
             {#if colors?.length > 0}
                 <div class="flex flex-col my-3">
                     <p>Colors:</p>
-                    <div class="grid px-2 gap-x-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+                    <div id="color-container">
                         {#each colors as color}
                             {#if color == selected_color}
-                                <div class="m-1">
-                                    <div id="selected_color" class="h-6 rounded-full" style="background-color: {color_map[color]};">
-                                        {#if parseInt(color_map[color].slice(1), 16) < 0xffffff / 2}
-                                            <p id="color" class="flex justify-center px-3" style="color: white;">{color}</p>
-                                        {:else}
-                                            <p id="color" class="flex justify-center px-3">{color}</p>
-                                        {/if}
-                                    </div>
+                                <div id="selected_color" class="h-6 rounded-full" style="background-color: {color_map[color]};">
+                                    {#if parseInt(color_map[color].slice(1), 16) < 0xffffff / 2}
+                                        <p id="color" class="justify-center px-3" style="color: white;">{color}</p>
+                                    {:else}
+                                        <p id="color" class="justify-center px-3">{color}</p>
+                                    {/if}
                                 </div>
                             {:else}
-                                <div class="m-1">
-                                    <!-- svelte-ignore a11y-click-events-have-key-events -->
-                                    <div id="unselected_color" 
-                                            class="h-6 rounded-full" 
-                                            style="background-color: {color_map[color]};"
-                                            on:click={() => filterByColor(color)}
-                                            >
-                                        {#if parseInt(color_map[color].slice(1), 16) < 0xffffff / 2}
-                                            <p id="color" class="flex px-3 justify-center" style="color: white;">{color}</p>
-                                        {:else}
-                                            <p id="color" class="flex px-3 justify-center">{color}</p>
-                                        {/if}
-                                    </div>
+                                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                                <div id="unselected_color" 
+                                        class="h-6 rounded-full" 
+                                        style="background-color: {color_map[color]};"
+                                        on:click={() => filterByColor(color)}
+                                        >
+                                    {#if parseInt(color_map[color].slice(1), 16) < 0xffffff / 2}
+                                        <p id="color" class="px-3 justify-center" style="color: white;">{color}</p>
+                                    {:else}
+                                        <p id="color" class="px-3 justify-center">{color}</p>
+                                    {/if}
                                 </div>
                             {/if}
                         {/each}
@@ -180,36 +184,39 @@
                 </div>
             {/if}
 
-                <div class="flex flex-row gap-x-5">
+                <div id="sq-container">
                     {#if sizes?.length > 0}
-                        <div class="flex flex-col">
+                        <div id="size-container">
                             <p>Size:</p>
-                            <Select.Root portal={null}>
-                                <Select.Trigger class="w-[180px]">
-                                    <Select.Value placeholder="Select Size" />
-                                </Select.Trigger>
-                                <Select.Content>
-                                    <Select.Group>
-                                        {#each sizes as size}
-                                            <Select.Item value={size} label={size} on:click={() => selectSize(size)}>
-                                                {size}
-                                            </Select.Item>
-                                        {/each}
-                                    </Select.Group>
-                                </Select.Content>
-                            </Select.Root>
+                            <div class="mx-3">
+                                <Select.Root portal={null}>
+                                    <Select.Trigger class="w-[8rem]">
+                                        <Select.Value placeholder="Select Size" />
+                                    </Select.Trigger>
+                                    <Select.Content>
+                                        <Select.Group>
+                                            {#each sizes as size}
+                                                <Select.Item value={size} label={size} on:click={() => selectSize(size)}>
+                                                    {size}
+                                                </Select.Item>
+                                            {/each}
+                                        </Select.Group>
+                                    </Select.Content>
+                                </Select.Root>
+                            </div>
                         </div>
                     {/if}
 
-                    <div class="flex flex-col">
+                    <div id="quantity-container">
                         <p>Quantity:</p>
-                        <div id="quantity-container" class="flex flex-row gap-x-3">
+
+                        <div class="flex flex-row gap-x-1 mx-3">
                             <!-- svelte-ignore a11y-click-events-have-key-events -->
-                            <div id="quantity" class="w-7" on:click={() => { quantity -= 1; }}>-</div>
+                            <div id="quantity" class="w-8" on:click={() => { quantity -= 1; }}>-</div>
                             <input type="number" id="quantity-input" value={quantity} />
                             <!-- svelte-ignore a11y-click-events-have-key-events -->
-                            <div id="quantity" class="w-7" on:click={() => { quantity += 1; }}>+</div>
-                        </div> 
+                            <div id="quantity" class="w-8" on:click={() => { quantity += 1; }}>+</div>
+                        </div>
                     </div>
                 </div>
 
@@ -267,19 +274,38 @@
         transition: background-color 0.25s;
     }
 
+    p#color {
+        margin: 0 0.5rem;
+        white-space: nowrap;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    div#color-container {
+        display: block;
+        position: relative;
+    }
+
     div#selected_color {
+        margin: 0.25rem 0.25rem;
+        display: inline-block;
+        position: relative;
+        width: auto;
         border-radius: 1rem;
         border: 1px solid black;
         box-shadow: 1px 1px 2px #28483435;
     }
 
     div#unselected_color {
+        margin: 0.25rem 0.25rem;
+        display: inline-block;
+        position: relative;
         border: 1px solid transparent;
         box-shadow: 1px 1px 2px #28483435;
     }
 
     div#unselected_color:hover {
-        display: flex;
         align-items: center;
         justify-content: center;
         border: 1px solid rgba(113, 146, 113, 0.377);
@@ -363,12 +389,6 @@
         max-height: 70vh;
     }
 
-    p#color {
-        -webkit-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-
     div#quantity {
         display:flex;
         justify-content: center;
@@ -387,10 +407,23 @@
         transition: filter 0.25s;
     }
 
+    div#sq-container {
+        display: block;
+        position: relative;
+        width: 100%;
+    }
+
+    div#size-container {
+        display: inline-block;
+        position: relative;
+        margin-bottom: 1rem;
+        margin-right: 7vw;
+    }
+
     div#quantity-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        display: inline-block;
+        position: relative;
+        width: 15rem;
     }
 
     input::-webkit-outer-spin-button,

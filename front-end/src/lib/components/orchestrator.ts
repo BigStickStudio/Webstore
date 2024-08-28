@@ -8,13 +8,11 @@ export default class Orchestrator {
     private constructor() 
         {
             let is_mobile = false;
-            let cart_count = 0;
-            let shopping_cart = {};
+            let shopping_cart = [];
 
             // Initialize store
             poser.set({
                 is_mobile: is_mobile,
-                cart_count: cart_count,
                 shopping_cart: shopping_cart
             });
         }
@@ -42,13 +40,10 @@ export default class Orchestrator {
     get cart_count(): number
         {
             let cc = 0;
-            poser.subscribe(p => { cc = p.cart_count; });
+            poser.subscribe(p => { cc = p.shopping_cart.length; });
             return cc;
         }
     
-    set cart_count(value: number)
-        { poser.update(p => { return { ...p, cart_count: value }; }); }
-
     get shopping_cart(): any
         {
             let sc = {};

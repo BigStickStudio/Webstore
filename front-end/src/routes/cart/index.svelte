@@ -5,11 +5,11 @@
 
     const orchestrator = Orchestrator.instance;
     $: cart_count = orchestrator.cart_count;
+    $: shopping_cart = orchestrator.shopping_cart;
 
     let unsubscribe = orchestrator?.store.subscribe((state) => {
-        cart_count = state.cart_count;
-        console.log("Cart count: ", orchestrator.cart_count);
-        console.log("Cart count updated to: ", cart_count);
+        shopping_cart = state.shopping_cart;
+        cart_count = shopping_cart.length;
     });
 </script>
 
@@ -25,12 +25,25 @@
                     </Card.Description>
                 </Card.Header>
                 <Card.Content>
-                    <Button variant="outline" 
-                            on:click={() => {
-                                console.log("Updating cart count");
-                                orchestrator.cart_count += 1}}>
-                        +1
-                    </Button>
+                    {#each shopping_cart as product}
+                        {#if product.category == "Clothing"}
+                            <div>
+                                <strong>{product.product}</strong>
+                                Color: {product.color}<br>
+                                Size: {product.size}<br>
+                                Quantity: {product.quantity}<br>
+                                Price: ${product.price}<br>
+                                <Button>Remove</Button>
+                            </div>
+                        {:else}
+                            <div>
+                                <strong>{product.product}</strong>
+                                Quantity: {product.quantity}<br>
+                                Price: ${product.price}<br>
+                                <Button>Remove</Button>
+                            </div>
+                        {/if}
+                    {/each}
                 </Card.Content>
                 <Card.Footer>
                     <div class="text-muted-foreground text-xs">
