@@ -5,6 +5,7 @@
     import * as Select from "$components/ui/select/index.js"
     import Orchestrator from "@/lib/components/orchestrator"
     import { color_map, product_map } from "@/lib/components/utils"
+    import { params } from '@roxi/routify'
     import Back from "lucide-svelte/icons/chevron-left"
     import Forward from "lucide-svelte/icons/chevron-right"
     import Dot from "lucide-svelte/icons/dot"
@@ -26,7 +27,7 @@
     let product_meta: any = product_map[product];
     let images: Array<string> = Object.keys(product_meta);
     let selected_image: number = 0;
-    let selected_color: string = colors ? colors[0] : undefined;
+    let selected_color: string = $params.color ? $params.color : colors ? colors[0] : undefined;
     let selected_size: string = undefined;
     let filtered_images: Array<string> = images;
     let quantity: number = 1;
@@ -50,32 +51,67 @@
         price = product_details['prices'][sizes.indexOf(size)];
     }
 
+    // TODO: Abstract some of this out to the orchestrator
     const addToCart = (e: any) => {
         e.preventDefault();
         let cart = orchestrator.shopping_cart;
+        let product_found = false;
 
         if (category == "Clothing") {
             if (selected_size === undefined) { alert('Please select a size'); return; }
             if (selected_color === undefined) { alert('Please select a color'); return; }
             if (quantity < 1) { alert('Please select a valid quantity'); return; }
-            alert(`Added ${selected_color} ${product_name}, ${selected_size} to cart`);
             
+            cart.forEach((product) => {
+                if (product.product == product_name && product.color == selected_color && product.size == selected_size) {
+                    product.quantity += quantity;
+                    product_found = true;
+                }
+            });
+
+            if (product_found) {
+                alert(`Updated ${selected_color} ${product_name}, ${selected_size} in cart`);
+                orchestrator.shopping_cart = cart;
+                return;
+            }
+
+            alert(`Added ${selected_color} ${product_name}, ${selected_size} to cart`);
             orchestrator.shopping_cart = [...cart, {
+                    product_name: product,
                     product: product_name,
                     color: selected_color,
                     size: selected_size,
                     price: price,
                     quantity: quantity,
-                    category: category
+                    category: category,
+                    image: filtered_images.filter(image => image.includes('front'))
                 }];
             return;
         }
 
+        // TODO: Add Product ID
+        cart.forEach((product) => {
+            if (product.product == product_name) {
+                product.quantity += quantity;
+                product_found = true;
+                return;
+            }
+        });
+
+        if (product_found) {
+            alert(`Updated ${product_name} in cart`);
+            orchestrator.shopping_cart = cart;
+            return;
+        }
+
+        alert(`Added ${product_name} to cart`);
         orchestrator.shopping_cart = [...cart, {
+            product_name: product,
             product: product_name,
             price: price,
             quantity: quantity,
-            category: category
+            category: category,
+            image: filtered_images.filter(image => image.includes('front'))
         }];
     }
 </script>

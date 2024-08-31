@@ -1,11 +1,29 @@
 <script lang="ts">
+    import ClothingItem from "$components/cart/clothing_item.svelte"
     import Orchestrator from "$components/orchestrator"
     import Button from "$components/ui/button/button.svelte"
     import * as Card from "$components/ui/card/index.js"
+    import BookItem from "@/lib/components/cart/book_item.svelte"
 
     const orchestrator = Orchestrator.instance;
     $: cart_count = orchestrator.cart_count;
     $: shopping_cart = orchestrator.shopping_cart;
+
+    const getSubtotal = () => {
+        let subtotal = 0;
+        shopping_cart.forEach((product) => {
+            subtotal += (product.price * product.quantity);
+        });
+        return subtotal.toFixed(2);
+    }
+
+    const getItemCount = () => {
+        let count = 0;
+        shopping_cart.forEach((product) => {
+            count += product.quantity;
+        });
+        return count;
+    }
 
     let unsubscribe = orchestrator?.store.subscribe((state) => {
         shopping_cart = state.shopping_cart;
@@ -21,34 +39,29 @@
                 <Card.Header>
                     <Card.Title>Cart</Card.Title>
                     <Card.Description>
-                        Manage your products and view their sales performance.
+                        <div class="text-muted-foreground text-xs">
+                            <!-- TODO: Add Proper Pagination -->
+                            Showing <strong>1-10</strong> of <strong>{cart_count}</strong> products
+                        </div>
                     </Card.Description>
                 </Card.Header>
                 <Card.Content>
-                    {#each shopping_cart as product}
-                        {#if product.category == "Clothing"}
-                            <div>
-                                <strong>{product.product}</strong>
-                                Color: {product.color}<br>
-                                Size: {product.size}<br>
-                                Quantity: {product.quantity}<br>
-                                Price: ${product.price}<br>
-                                <Button>Remove</Button>
-                            </div>
-                        {:else}
-                            <div>
-                                <strong>{product.product}</strong>
-                                Quantity: {product.quantity}<br>
-                                Price: ${product.price}<br>
-                                <Button>Remove</Button>
-                            </div>
-                        {/if}
-                    {/each}
+                    <div class="flex flex-col gap-y-3">
+                        {#each shopping_cart as product}
+                            {#if product.category == "Clothing"}
+                                <div id="item">
+                                    <ClothingItem product={product} />
+                                </div>
+                            {:else}
+                                <div id="item">
+                                    <BookItem product={product} />
+                                </div>
+                            {/if}
+                        {/each}
+                    </div>
                 </Card.Content>
                 <Card.Footer>
-                    <div class="text-muted-foreground text-xs">
-                        Showing <strong>1-10</strong> of <strong>32</strong> products
-                    </div>
+
                 </Card.Footer>
             </Card.Root>
         </div>
@@ -62,13 +75,15 @@
                     </Card.Description>
                 </Card.Header>
                 <Card.Content>
-                    Subtotal: $0.00
-                    <br>Items: {cart_count}
-                    <br>
-                    <Button>Order Now</Button>
+                    <div class="flex flex-col">
+                        Subtotal: ${getSubtotal()}
+                        <br>Items: {getItemCount()}
+                        <br><br>
+                        <div class="ml-auto">
+                            <Button>Order Now</Button>
+                        </div>
+                    </div>
                 </Card.Content>
-                <Card.Footer>
-                </Card.Footer>
             </Card.Root>
         </div>
         
@@ -84,5 +99,10 @@
     div#order {
         width: 30vw;
         margin: 1rem;
+    }
+
+    div#item {
+        border-radius: 1rem;
+        box-shadow: 1px 1px 2px #5b534e22;
     }
 </style>
