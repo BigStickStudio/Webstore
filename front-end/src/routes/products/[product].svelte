@@ -26,9 +26,11 @@
     let price = single_price ? prices[0] : `${min_price} - ${max_price}`;
     let product_meta: any = product_map[product];
     let images: Array<string> = Object.keys(product_meta);
+
     let selected_image: number = 0;
     let selected_color: string = $params.color ? $params.color : colors ? colors[0] : undefined;
     let selected_size: string = undefined;
+
     let filtered_images: Array<string> = images;
     let quantity: number = 1;
 
@@ -54,65 +56,44 @@
     // TODO: Abstract some of this out to the orchestrator
     const addToCart = (e: any) => {
         e.preventDefault();
-        let cart = orchestrator.shopping_cart;
-        let product_found = false;
 
-        if (category == "Clothing") {
-            if (selected_size === undefined) { alert('Please select a size'); return; }
-            if (selected_color === undefined) { alert('Please select a color'); return; }
-            if (quantity < 1) { alert('Please select a valid quantity'); return; }
-            
-            cart.forEach((product) => {
-                if (product.product == product_name && product.color == selected_color && product.size == selected_size) {
-                    product.quantity += quantity;
-                    product_found = true;
-                }
-            });
-
-            if (product_found) {
-                alert(`Updated ${selected_color} ${product_name}, ${selected_size} in cart`);
-                orchestrator.shopping_cart = cart;
-                return;
-            }
-
-            alert(`Added ${selected_color} ${product_name}, ${selected_size} to cart`);
-            orchestrator.shopping_cart = [...cart, {
+        let selected_item = {
                     product_name: product,
-                    product: product_name,
+                    product: product_name, // Don't ask why we swaped these two
                     color: selected_color,
                     size: selected_size,
                     price: price,
                     quantity: quantity,
                     category: category,
                     image: filtered_images.filter(image => image.includes('front'))
-                }];
-            return;
+                };
+
+        // TODO: Implement custom modal
+        switch (orchestrator.addToCart(selected_item)) {
+            case "quantity":
+                alert('Please select a valid quantity.'); ;
+                break;
+            case 'size':
+                alert('Please select a size.');
+                break;
+            case 'color':
+                alert('Please select a color');
+                break;
+            case 'added':
+                if (category == "Clothing") 
+                    { alert(`Added ${selected_color} ${product_name}, ${selected_size} to cart`) } 
+                else if (category == "Book") 
+                    { alert(`Added ${product_name} to cart`) }
+                break;
+            case 'updated':
+                if (category == "Clothing") 
+                    { alert(`Updated ${selected_color} ${product_name}, ${selected_size} in cart`) } 
+                else if (category == "Book") 
+                    { alert(`Updated ${product_name} to cart`) }
+                break;
+            default:
+                alert("Error adding item to cart");
         }
-
-        // TODO: Add Product ID
-        cart.forEach((product) => {
-            if (product.product == product_name) {
-                product.quantity += quantity;
-                product_found = true;
-                return;
-            }
-        });
-
-        if (product_found) {
-            alert(`Updated ${product_name} in cart`);
-            orchestrator.shopping_cart = cart;
-            return;
-        }
-
-        alert(`Added ${product_name} to cart`);
-        orchestrator.shopping_cart = [...cart, {
-            product_name: product,
-            product: product_name,
-            price: price,
-            quantity: quantity,
-            category: category,
-            image: filtered_images.filter(image => image.includes('front'))
-        }];
     }
 </script>
 

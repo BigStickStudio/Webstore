@@ -53,4 +53,49 @@ export default class Orchestrator {
 
     set shopping_cart(value: any)
         { poser.update(p => { return { ...p, shopping_cart: value }; }); }
+
+    addToCart = (item: any) =>
+        {
+            let cart = this.shopping_cart;
+            let product_found = false;
+
+            let quantity = item.quantity;
+            let category = item.category;
+            let selected_size = item.size;
+            let selected_color = item.color;
+            let product_name = item.product;
+
+            if (quantity < 1) { return 'quantity'; }
+
+            switch (category) {
+                case 'Clothing':
+                    if (selected_size === undefined) { return 'size'; }
+                    if (selected_color === undefined) { return 'color'; }
+                    
+                    cart.forEach((product: any) => {
+                        if (product.product == product_name && product.color == selected_color && product.size == selected_size) {
+                            alert('Found: ' + product.product + ' ' + product.color + ' ' + product.size);
+                            product.quantity += quantity;
+                            product_found = true;
+                        }
+                    });
+                case 'Book':
+                    // TODO: Add Product ID
+                    cart.forEach((product: any) => {
+                        if (product.product == product_name) {
+                            product.quantity += quantity;
+                            product_found = true;
+                            return;
+                        }
+                    });
+
+                    if (product_found) {
+                        this.shopping_cart = cart;
+                        return 'updated';
+                    }
+
+                    this.shopping_cart = [...cart, item ];
+                    return 'added';
+            }
+        }
 }
