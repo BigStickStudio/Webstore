@@ -1,6 +1,15 @@
 <script>
     export let product;
     import Button from "$components/ui/button/button.svelte"
+    import Orchestrator from "../orchestrator"
+
+    let orchestrator = Orchestrator.instance;
+
+    const removeItem = (e) => {
+        e.preventDefault();
+        let res = orchestrator.removeFromCart(product);
+        alert("Item Removed:" + res);
+    }
 
 </script>
 
@@ -27,7 +36,10 @@
         </div>
         <div class="ml-auto m-3 mx-5">
             <!-- TODO: Add a Remove function to the Orchestrator / Cart -->
-            <Button  variant="outline">Remove</Button>
+            <Button on:click={removeItem} 
+                    variant="outline">
+                Remove
+            </Button>
         </div>
     </div>
 </main>

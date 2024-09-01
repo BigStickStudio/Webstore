@@ -82,13 +82,13 @@
             case 'added':
                 if (category == "Clothing") 
                     { alert(`Added ${selected_color} ${product_name}, ${selected_size} to cart`) } 
-                else if (category == "Book") 
+                else if (category == "Books") 
                     { alert(`Added ${product_name} to cart`) }
                 break;
             case 'updated':
                 if (category == "Clothing") 
                     { alert(`Updated ${selected_color} ${product_name}, ${selected_size} in cart`) } 
-                else if (category == "Book") 
+                else if (category == "Books") 
                     { alert(`Updated ${product_name} to cart`) }
                 break;
             default:

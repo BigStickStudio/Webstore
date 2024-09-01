@@ -79,23 +79,111 @@ export default class Orchestrator {
                             product_found = true;
                         }
                     });
-                case 'Book':
+
+                    break;
+                case 'Books':
                     // TODO: Add Product ID
                     cart.forEach((product: any) => {
                         if (product.product == product_name) {
                             product.quantity += quantity;
                             product_found = true;
-                            return;
                         }
                     });
-
-                    if (product_found) {
-                        this.shopping_cart = cart;
-                        return 'updated';
-                    }
-
-                    this.shopping_cart = [...cart, item ];
-                    return 'added';
+                    break;
+                default:
+                    return 'category';
             }
+        
+            if (product_found) {
+                this.shopping_cart = cart;
+                return 'updated';
+            }
+
+            this.shopping_cart = [...cart, item ];
+            return 'added';
+        }
+
+    removeFromCart = (item: any) =>
+        {
+            let cart = this.shopping_cart;
+            let product_found = false;
+
+            let quantity = item.quantity;
+            let category = item.category;
+            let selected_size = item.size;
+            let selected_color = item.color;
+            let product_name = item.product;
+
+            if (quantity < 1) { return 'quantity'; }
+
+            switch (category) {
+                case 'Clothing':
+                    if (selected_size === undefined) { return 'size'; }
+                    if (selected_color === undefined) { return 'color'; }
+                    
+                    cart.forEach((product: any) => {
+                        if (product.product == product_name && product.color == selected_color && product.size == selected_size) {
+                            product_found = true;
+                        }
+                    });
+                    break;
+                case 'Books': 
+                    cart.forEach((product: any) => {
+                        if (product.product == product_name) 
+                            { product_found = true; }
+                    });
+                    break;
+                default:
+                    return 'category';
+            }
+            
+            if (product_found) {
+                this.shopping_cart = cart.filter((product: any) => product.product !== product_name);
+                return 'updated';
+            }
+            return 'not found';
+        }
+
+    updateQuantity = (item: any, quantity: number) =>
+        {
+            let cart = this.shopping_cart;
+            let product_found = false;
+
+            let category = item.category;
+            let selected_size = item.size;
+            let selected_color = item.color;
+            let product_name = item.product;
+
+            if (quantity < 1) { return 'quantity'; }
+
+            switch (category) {
+                case 'Clothing':
+                    if (selected_size === undefined) { return 'size'; }
+                    if (selected_color === undefined) { return 'color'; }
+                    
+                    cart.forEach((product: any) => {
+                        if (product.product == product_name && product.color == selected_color && product.size == selected_size) {
+                            product.quantity = quantity;
+                            product_found = true;
+                        }
+                    });
+                    break;
+                case 'Books':
+                    cart.forEach((product: any) => {
+                        if (product.product == product_name) {
+                            product.quantity = quantity;
+                            product_found = true;
+                        }
+                    });
+                    break;
+                default:
+                    return 'category';
+            }
+            
+            if (product_found) {
+                this.shopping_cart = cart;
+                return 'updated';
+            }
+            return 'not found';
         }
 }
